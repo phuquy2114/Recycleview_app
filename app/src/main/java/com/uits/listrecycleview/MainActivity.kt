@@ -1,9 +1,12 @@
 package com.uits.listrecycleview
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.uits.listrecycleview.interfaces.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,8 +22,17 @@ class MainActivity : AppCompatActivity() {
                 , "Nguyen Van C", "Nguyen Van D")
 
         mRecycleView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
-        mMainAdapter = MainAdapter(mListData)
+        mMainAdapter = MainAdapter(mListData, object : OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                Toast.makeText(this@MainActivity, "Cu Duc Ga ${mListData[position]}", Toast.LENGTH_LONG).show()
+            }
+
+        })
 
         mRecycleView.adapter = mMainAdapter
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

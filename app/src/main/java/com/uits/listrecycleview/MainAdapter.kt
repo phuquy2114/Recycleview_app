@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.uits.listrecycleview.interfaces.OnItemClickListener
 import kotlinx.android.synthetic.main.viewholder_item.view.*
 
 /**
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.viewholder_item.view.*
  * Copyright © 2019 UITS CO.,LTD
  * Created PHUQUY on 7/1/20.
  **/
-class MainAdapter(val mList: MutableList<String>) : RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
+class MainAdapter(val mList: MutableList<String>, val mListener : OnItemClickListener) : RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
 
     /**
      * create a view
@@ -31,6 +32,10 @@ class MainAdapter(val mList: MutableList<String>) : RecyclerView.Adapter<MainAda
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.itemView.mTxtName.text = mList[position].toString()
+
+        holder.itemView.mTxtName.setOnClickListener {
+            mListener.onItemClick(position);
+        }
     }
 
 
