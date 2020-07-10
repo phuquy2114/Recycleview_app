@@ -1,49 +1,56 @@
 package com.uits.listrecycleview
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.uits.listrecycleview.interfaces.OnItemClickListener
-import kotlinx.android.synthetic.main.viewholder_item.view.*
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.uits.listrecycleview.model.Music
 
 /**
- * Adapter for Main screen
+ * Main Java Adapter
  * Copyright © 2019 UITS CO.,LTD
- * Created PHUQUY on 7/1/20.
- **/
-class MainAdapter(val mList: MutableList<String>, val mListener : OnItemClickListener) : RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
-
-    /**
-     * create a view
-     */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.viewholder_item, parent, false)
-        )
+ * Created PHUQUY on 7/6/20.
+ */
+internal class MainAdapter(
+    private val mContext: Context,
+    private val mListMusic: List<Music>
+) : RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ItemViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.viewholder_item, parent, false)
+        return ItemViewHolder(view)
     }
 
-    /**
-     * size on list
-     */
+    override fun onBindViewHolder(
+        holder: ItemViewHolder,
+        position: Int
+    ) {
+        holder.mTxtNameSinger.text = mListMusic[position].nameSinger
+        holder.mTxtNameSong.text = mListMusic[position].nameSong
+    }
+
     override fun getItemCount(): Int {
-        return mList.size
+        return mListMusic.size
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.itemView.mTxtName.text = mList[position].toString()
+    internal inner class ItemViewHolder(itemView: View) :
+        ViewHolder(itemView) {
+        public val mImageAvatar: ImageView
+        public val mTxtNameSong: TextView
+        public val mTxtNameSinger: TextView
 
-        holder.itemView.mTxtName.setOnClickListener {
-            mListener.onItemClick(position);
+        init {
+            mImageAvatar = itemView.findViewById(R.id.mImgAvatar)
+            mTxtNameSong = itemView.findViewById(R.id.mTxtNameSong)
+            mTxtNameSinger = itemView.findViewById(R.id.mTxtNameSinger)
         }
-    }
-
-
-    /**
-     * this ItemViewHolder class
-     */
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     }
 
 }
