@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.uits.listrecycleview.interfaces.OnItemClickListener
 import com.uits.listrecycleview.model.Music
 
 /**
@@ -17,8 +18,10 @@ import com.uits.listrecycleview.model.Music
  */
 internal class MainAdapter(
     private val mContext: Context,
-    private val mListMusic: List<Music>
+    private val mListMusic: List<Music>,
+    private val mListener: OnItemClickListener
 ) : RecyclerView.Adapter<MainAdapter.ItemViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -34,6 +37,10 @@ internal class MainAdapter(
     ) {
         holder.mTxtNameSinger.text = mListMusic[position].nameSinger
         holder.mTxtNameSong.text = mListMusic[position].nameSong
+
+        holder.itemView.setOnClickListener {
+            mListener.onItemClick(position)
+        }
     }
 
     override fun getItemCount(): Int {
